@@ -74,7 +74,7 @@ _WHITESPACE = re.compile(r"\s+")
 _EDGE_PUNCT = re.compile(r"^[\W_]+|[\W_]+$", re.UNICODE)
 
 
-def normalise_surface(text: str) -> str:
+def normalise_surface(text: str, label: str | None = None) -> str:
     """Reduce an entity mention to a comparable surface form.
 
     Collapses internal whitespace (entity spans can straddle the newline tokens
@@ -85,6 +85,8 @@ def normalise_surface(text: str) -> str:
     text = _WHITESPACE.sub(" ", text).strip()
     text = _LEADING_DET.sub("", text)
     text = _POSSESSIVE.sub("", text)
+    if label in TEMPORAL_LABELS:
+        return text.strip()
     text = _EDGE_PUNCT.sub("", text)
     return text.strip()
 
@@ -96,9 +98,9 @@ ALIASES: dict[str, str] = {}
 
 
 def _register_aliases(canonical: str, *variants: str) -> None:
-    ALIASES[canonical.lower()] = canonical
+    ALIASES[normalise_surface(canonical).lower()] = canonical
     for variant in variants:
-        ALIASES[variant.lower()] = canonical
+        ALIASES[normalise_surface(variant).lower()] = canonical
 
 
 _register_aliases("NASA", "N.A.S.A.",
@@ -127,9 +129,9 @@ _register_aliases("Mars Orbiter Mission", "Mangalyaan")
 _register_aliases("European Southern Observatory", "ESO")
 
 
-def canonicalise(text: str) -> str:
+def canonicalise(text: str, label: str | None = None) -> str:
     """Map a normalised surface form onto its canonical name."""
-    surface = normalise_surface(text)
+    surface = normalise_surface(text, label)
     return ALIASES.get(surface.lower(), surface)
 
 
@@ -186,7 +188,7 @@ def _sentence_index(doc: Doc) -> dict[int, int]:
 def keep_entity(ent: Span, labels: Iterable[str] = ENTITY_LABELS) -> bool:
     if ent.label_ not in labels:
         return False
-    return len(normalise_surface(ent.text)) >= MIN_ENTITY_CHARS
+    return len(normalise_surface(ent.text, ent.label_)) >= MIN_ENTITY_CHARS
 
 
 def iter_mentions(doc: Doc, *, labels: Iterable[str] = ENTITY_LABELS
@@ -199,7 +201,7 @@ def iter_mentions(doc: Doc, *, labels: Iterable[str] = ENTITY_LABELS
     for ent in doc.ents:
         if not keep_entity(ent, label_set):
             continue
-        canonical = canonicalise(ent.text)
+        canonical = canonicalise(ent.text, ent.label_)
         if not canonical:
             continue
         sent = ent.sent if doc.has_annotation("SENT_START") else None
