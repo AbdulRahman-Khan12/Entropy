@@ -91,3 +91,12 @@ CACHE_DIR = CORPUS_DIR / "cache"          # per-document .spacy annotations
 OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 SPACY_MODEL = "en_core_web_sm"            # NOT trf — Streamlit Cloud RAM ceiling
 SPACY_BATCH_SIZE = 32
+
+USE_GAZETTEER = True
+ENTITY_LABELS = (
+    "PERSON", "ORG", "GPE", "LOC", "FAC", "NORP",
+    "PRODUCT", "EVENT", "WORK_OF_ART", "LAW",
+    "SPACECRAFT", "CELESTIAL", "DATE", "TIME",
+)
+TEMPORAL_LABELS = ("DATE", "TIME")
+MIN_ENTITY_CHARS = 2

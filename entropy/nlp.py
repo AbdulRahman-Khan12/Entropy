@@ -44,6 +44,7 @@ from spacy.language import Language
 from spacy.tokens import Doc, DocBin
 
 from entropy import config
+from entropy.gazetteer import add_gazetteer
 
 # --------------------------------------------------------------------------
 # Paths and settings, resolved from config.py with sane fallbacks.
@@ -63,7 +64,7 @@ OUTPUTS_DIR: Path = Path(
 
 SPACY_MODEL: str = getattr(config, "SPACY_MODEL", "en_core_web_sm")
 BATCH_SIZE: int = getattr(config, "SPACY_BATCH_SIZE", 32)
-
+USE_GAZETTEER: bool = getattr(config, "USE_GAZETTEER", True)
 CACHE_MANIFEST: Path = CACHE_DIR / "cache_manifest.json"
 CACHE_SUFFIX = ".spacy"
 
@@ -179,6 +180,7 @@ Pin the wheel in requirements.txt instead - see the project README.
 
 def load_nlp(model: str = SPACY_MODEL, *, tokenize_only: bool = False,
              paragraph_breaks_enabled: bool = True,
+             use_gazetteer: bool = USE_GAZETTEER,
              exclude: Iterable[str] = ()) -> Language:
     """Load and configure the spaCy pipeline.
 
@@ -197,7 +199,8 @@ def load_nlp(model: str = SPACY_MODEL, *, tokenize_only: bool = False,
     exclude:
         Pipe names to leave out of the loaded model.
     """
-    key = (model, tokenize_only, paragraph_breaks_enabled, tuple(exclude))
+    key = (model, tokenize_only, paragraph_breaks_enabled, use_gazetteer,
+           tuple(exclude))
     if key in _NLP_CACHE:
         return _NLP_CACHE[key]
 
@@ -209,7 +212,8 @@ def load_nlp(model: str = SPACY_MODEL, *, tokenize_only: bool = False,
             nlp = spacy.load(model, exclude=list(exclude))
         except OSError as exc:  # model not installed
             raise SystemExit(_MODEL_MISSING_HINT.format(model=model)) from exc
-
+    if use_gazetteer and not tokenize_only:
+        add_gazetteer(nlp)
     if paragraph_breaks_enabled:
         names = nlp.pipe_names
         if "parser" in names:
