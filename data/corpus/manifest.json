@@ -1,0 +1,100 @@
+{
+  "theme": "space-and-science",
+  "built_at_utc": "2026-08-07T19:58:19+00:00",
+  "n_documents": 500,
+  "date_range": [
+    "2005-01-06",
+    "2018-11-26"
+  ],
+  "total_words": 158287,
+  "sha256": "5bbfd2d7f91cf2ceaabc2cdaa1f01e1f6b5132eda947cc46836f51d53cd70a1f",
+  "selection": {
+    "theme_categories": [
+      "space",
+      "astronomy",
+      "nasa",
+      "isro",
+      "spacex",
+      "european space agency",
+      "roscosmos",
+      "satellite"
+    ],
+    "exclude_categories": [
+      "sport",
+      "obituaries",
+      "football",
+      "cricket"
+    ],
+    "min_words": 120,
+    "max_docs": 500,
+    "date_min": "2005-01-01",
+    "date_max": "2026-05-04"
+  },
+  "top_categories": [
+    [
+      "space",
+      464
+    ],
+    [
+      "science and technology",
+      387
+    ],
+    [
+      "united states",
+      294
+    ],
+    [
+      "nasa",
+      250
+    ],
+    [
+      "north america",
+      244
+    ],
+    [
+      "international space station",
+      115
+    ],
+    [
+      "europe",
+      102
+    ],
+    [
+      "astronomy",
+      77
+    ],
+    [
+      "asia",
+      73
+    ],
+    [
+      "physics",
+      72
+    ],
+    [
+      "russia",
+      52
+    ],
+    [
+      "chemistry",
+      51
+    ],
+    [
+      "mars",
+      51
+    ],
+    [
+      "european space agency",
+      41
+    ],
+    [
+      "jet propulsion laboratory",
+      32
+    ]
+  ],
+  "source": {
+    "name": "Wikinews (English)",
+    "url": "https://en.wikinews.org/",
+    "license": "CC BY 2.5"
+  }
+}

@@ -1,0 +1,39 @@
+# --- Data -----------------------------------------------------------------
+# Raw dumps are large and redistributable only under their own terms.
+# Never commit them. The build script regenerates the corpus from them.
+data/raw/*
+!data/raw/.gitkeep
+
+# Gold evaluation data (TimeBank / AQUAINT) has its own licence. Link, don't ship.
+data/eval/*
+!data/eval/.gitkeep
+
+# The frozen corpus IS committed on purpose - it is what makes results
+# reproducible for anyone who clones this repo. Do not add data/corpus here.
+
+# Generated artefacts (entity tables, graphs, figures)
+outputs/*
+!outputs/.gitkeep
+
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# --- Editors / OS ---------------------------------------------------------
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# --- Secrets --------------------------------------------------------------
+.env
+.streamlit/secrets.toml

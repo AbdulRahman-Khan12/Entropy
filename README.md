@@ -1,0 +1,121 @@
+# Entropy
+
+An information extraction pipeline over a frozen news corpus. Entropy performs
+POS tagging, named entity recognition, relation extraction, event extraction and
+temporal ordering, then presents the results — annotated text, entity and
+relation tables, and an event timeline — through a Streamlit interface.
+
+Coursework for **AML23702 — Advanced Natural Language Processing**, Exercise 1.
+
+---
+
+## Why this design
+
+The hard part of Exercise 1 is temporal ordering. Ordering events requires a
+**Document Creation Time (DCT)**: without knowing when a document was written,
+expressions like *"on Tuesday"* or *"three days later"* cannot be resolved to
+real dates, and the timeline degrades into a list of whatever absolute dates
+happened to appear in the text.
+
+Wikinews satisfies this. Every article carries a publication date, the register
+is newswire (so relative time expressions are dense), and articles cluster
+around shared stories — which gives *cross-document* timelines rather than one
+timeline per article.
+
+The corpus is **frozen and committed** to this repository. Cloning the repo is
+enough to reproduce every result; no downloads, no API keys, no drift.
+
+---
+
+## Setup
+
+Python 3.11 or 3.12 is recommended. spaCy, Stanza and transformers (added from
+Stage 3 onward) have the most reliable Windows wheels on those versions.
+
+```powershell
+cd "D:\GlobalAcademic\7thsem\Advanced NLP\Projects\Entropy"
+
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Note the quotes around the path — `Advanced NLP` contains a space.
+
+If PowerShell blocks the activation script, run once:
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+---
+
+## Getting the data
+
+### Working corpus (required)
+
+1. Download the Wikinews article dataset (a JSON array of ~21,000 articles,
+   CC BY 2.5): https://www.kaggle.com/datasets/datagator/wikinews-article-dataset
+2. Save the JSON file as `data/raw/wikinews.json`.
+3. Build the frozen slice:
+
+```powershell
+python -m scripts.build_corpus --dry-run   # preview the selection
+python -m scripts.build_corpus             # write it
+```
+
+This produces `data/corpus/entropy_corpus.jsonl` and
+`data/corpus/manifest.json`. Both are committed; `data/raw/` is not.
+
+Tune the selection in `entropy/config.py` — `THEME_CATEGORIES`, `MIN_WORDS`
+and `MAX_DOCS` are the knobs that matter.
+
+### Evaluation data (optional, Stage 7)
+
+TimeBank + AQUAINT in TimeML format, used to measure extraction accuracy
+against gold annotations. Place under `data/eval/`. Not redistributed here —
+see `NOTICE.md`.
+
+---
+
+## Layout
+
+```
+Entropy/
+├─ entropy/              importable package — the Streamlit app depends on this
+│  ├─ config.py          all paths and tunable parameters
+│  └─ corpus.py          Document model + loaders
+├─ scripts/              one-off command-line jobs
+│  └─ build_corpus.py    raw dump -> frozen JSONL
+├─ data/
+│  ├─ raw/               git-ignored — large source dumps
+│  ├─ corpus/            committed — the frozen working corpus
+│  └─ eval/              git-ignored — gold annotations
+├─ outputs/              git-ignored — generated tables and figures
+└─ notebooks/            exploration
+```
+
+The `entropy/` vs `scripts/` split matters for deployment: Streamlit Community
+Cloud only needs to import `entropy/`, so build-time code never ships.
+
+---
+
+## Stages
+
+| Stage | Content | Status |
+|-------|---------|--------|
+| 1 | Repository scaffold, frozen corpus, build pipeline | ✅ |
+| 2 | Ingestion and preprocessing (segmentation, tokenisation) | |
+| 3 | POS tagging and named entity recognition | |
+| 4 | Relation extraction | |
+| 5 | Event and time expression extraction, temporal normalisation | |
+| 6 | Temporal ordering and event graph | |
+| 7 | Streamlit interface, evaluation, report | |
+
+---
+
+## Attribution
+
+See `NOTICE.md`.

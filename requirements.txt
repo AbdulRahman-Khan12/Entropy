@@ -1,0 +1,18 @@
+# Entropy - dependencies
+#
+# Kept deliberately minimal. Each stage adds only what it needs, so that if an
+# install breaks you know exactly which change caused it. Streamlit Community
+# Cloud installs this file verbatim, so every line here costs deploy time and
+# memory.
+
+# --- Stage 1: corpus handling ---------------------------------------------
+pandas>=2.0,<3.0
+python-dateutil>=2.9
+
+# --- Added in later stages (kept here as a roadmap, currently commented) ---
+# Stage 3  spacy>=3.7,<4.0          # POS tagging + NER
+# Stage 3  nltk>=3.9                # WordNet, tokenisers, comparison baseline
+# Stage 5  dateparser>=1.2          # relative time expression normalisation
+# Stage 6  networkx>=3.2            # temporal graph
+# Stage 6  matplotlib>=3.8          # timeline figures
+# Stage 7  streamlit>=1.40          # web interface
