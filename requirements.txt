@@ -16,3 +16,6 @@ python-dateutil>=2.9
 # Stage 6  networkx>=3.2            # temporal graph
 # Stage 6  matplotlib>=3.8          # timeline figures
 # Stage 7  streamlit>=1.40          # web interface
+
+spacy>=3.8,<3.9
+en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl

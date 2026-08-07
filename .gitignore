@@ -37,3 +37,7 @@ desktop.ini
 # --- Secrets --------------------------------------------------------------
 .env
 .streamlit/secrets.toml
+
+
+data/corpus/cache/
+outputs/

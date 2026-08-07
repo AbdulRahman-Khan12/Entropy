@@ -86,3 +86,8 @@ DATE_MAX: str = "2026-05-04"
 SOURCE_NAME: str = "Wikinews (English)"
 SOURCE_URL: str = "https://en.wikinews.org/"
 SOURCE_LICENSE: str = "CC BY 2.5"
+
+CACHE_DIR = CORPUS_DIR / "cache"          # per-document .spacy annotations
+OUTPUTS_DIR = PROJECT_ROOT / "outputs"
+SPACY_MODEL = "en_core_web_sm"            # NOT trf — Streamlit Cloud RAM ceiling
+SPACY_BATCH_SIZE = 32
