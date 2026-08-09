@@ -1,0 +1,9 @@
+event_type,count,docs,with_agent,with_patient,with_time,negated,mean_confidence,top_triggers
+docking,81,41,15,17,64,2,0.651,dock (48); docking (21); rendezvous (6); undock (4); undocking (2)
+delay,168,94,11,2,115,1,0.607,delay (129); postpone (18); scrub (13); reschedule (3); put (3)
+failure,479,204,19,44,214,4,0.598,fail (63); failure (55); lose (50); crash (40); loss (36)
+flyby,58,27,3,15,26,0,0.599,flyby (37); encounter (11); fly (10)
+landing,266,105,7,36,120,8,0.592,landing (116); land (105); descent (22); touch (11); reentry (5)
+launch,1175,261,50,175,723,52,0.6,launch (1094); lift (42); liftoff (20); take (14); launching (2)
+discovery,816,257,79,22,251,17,0.599,find (247); discover (139); discovery (124); detect (85); observation (63)
+ALL,3043,466,184,311,1513,84,0.6,

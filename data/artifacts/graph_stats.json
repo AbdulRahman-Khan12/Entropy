@@ -1,0 +1,88 @@
+{
+  "nodes": 3331,
+  "edges": 15132,
+  "node_types": {
+    "entity": 288,
+    "event": 3043
+  },
+  "node_categories": {
+    "SPACECRAFT": 74,
+    "ORG": 91,
+    "CELESTIAL": 14,
+    "GPE": 25,
+    "FAC": 8,
+    "PERSON": 51,
+    "LOC": 5,
+    "discovery": 816,
+    "launch": 1175,
+    "failure": 479,
+    "delay": 168,
+    "flyby": 58,
+    "landing": 266,
+    "docking": 81,
+    "PRODUCT": 8,
+    "NORP": 10,
+    "WORK_OF_ART": 1,
+    "LAW": 1
+  },
+  "edge_types": {
+    "RELATION": 197,
+    "AGENT": 184,
+    "PATIENT": 311,
+    "TEMPORAL": 14440
+  },
+  "isolated_nodes": 69,
+  "mean_degree": 9.09,
+  "top_by_degree": [
+    {
+      "node_id": "ORG:NASA",
+      "label": "NASA",
+      "degree": 75
+    },
+    {
+      "node_id": "SPACECRAFT:ISS",
+      "label": "ISS",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0311:0:5",
+      "label": "launch: launched",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0311:6:142",
+      "label": "launch: launched",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0311:7:160",
+      "label": "launch: launched",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0311:34:711",
+      "label": "failure: accident",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0332:10:314",
+      "label": "launch: launch",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0332:30:882",
+      "label": "launch: launch",
+      "degree": 40
+    },
+    {
+      "node_id": "wn-0332:17:506",
+      "label": "launch: launches",
+      "degree": 39
+    },
+    {
+      "node_id": "wn-0311:12:262",
+      "label": "launch: launch",
+      "degree": 39
+    }
+  ]
+}

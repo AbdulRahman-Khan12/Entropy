@@ -1,0 +1,9 @@
+relation,rule_count,rule_distinct_pairs,rule_docs,rule_mean_confidence,rule_high_conf_count,hf_count,hf_distinct_pairs,agreed_count,rule_only_count,hf_only_count,jaccard,top_pairs
+LAUNCHED_BY,23,19,19,0.571,8,8,7,3,20,5,0.107,Space Shuttle Atlantis -> STS-122 (3); Delta IV Heavy -> Boeing (2); Delta IV -> U.S. Air Force Research Laboratory (2); Cassini-Huygens -> NASA (1); PSLV -> ISRO (1)
+OPERATED_BY,61,32,53,0.641,7,8,7,0,61,8,0.0,Cassini -> NASA (6); Mars Express -> ESA (4); Spitzer Space Telescope -> NASA (4); Space Shuttle -> NASA (4); Swift -> NASA (3)
+DESTINATION,30,18,25,0.521,7,13,10,1,29,10,0.025,Phoenix -> Mars (8); Cassini -> Saturn (3); Cassini -> Titan (2); Deep Impact -> Tempel 1 (2); Cassini-Huygens -> Saturn (2)
+ORBITS,14,9,13,0.566,4,44,16,2,12,29,0.047,Shenzhou -> Earth (4); Cassini -> Saturn (3); Cassini-Huygens -> Saturn (1); Mars Express -> Mars (1); Mars Global Surveyor -> Mars (1)
+LAUNCHED_FROM,30,24,23,0.582,13,53,42,0,30,47,0.0,Proton -> Baikonur Cosmodrome (3); Soyuz -> Baikonur Cosmodrome (3); Proton -> Kazakhstan (2); Space Shuttle Atlantis -> Kennedy Space Center (2); Shenzhou -> People's Republic of China (1)
+PART_OF,15,15,13,0.413,0,120,75,1,14,104,0.008,Hubble Space Telescope -> Wide Field Camera 3 (1); Proton -> Breeze M (1); ISS -> ESA (1); ISS -> Pirs (1); Space Shuttle Endeavour -> Japanese Experiment Module (1)
+CREWED_BY,24,23,14,0.513,0,39,28,0,24,33,0.0,Space Shuttle -> Tim Kopra (2); Mars Global Surveyor -> Altimeter (1); Cassini -> Andrew Ingersoll (1); Cassini -> Ellen Stofan (1); ISS -> Canadarm (1)
+ALL,197,140,123,0.567,39,285,185,7,190,236,0.016,
