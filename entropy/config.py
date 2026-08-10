@@ -24,7 +24,7 @@ RAW_DIR: Path = DATA_DIR / "raw"        # git-ignored: big, licensed source dump
 CORPUS_DIR: Path = DATA_DIR / "corpus"  # committed: the small frozen slice
 EVAL_DIR: Path = DATA_DIR / "eval"      # git-ignored: TimeBank / AQUAINT gold data
 OUTPUT_DIR: Path = PROJECT_ROOT / "outputs"  # git-ignored: generated artefacts
-
+OUTPUTS_DIR = OUTPUT_DIR  # deprecated alias, kept for older call sites
 # Input: the raw Wikinews JSON you download once (see README).
 RAW_WIKINEWS_JSON: Path = RAW_DIR / "wikinews.json"
 
@@ -88,7 +88,6 @@ SOURCE_URL: str = "https://en.wikinews.org/"
 SOURCE_LICENSE: str = "CC BY 2.5"
 
 CACHE_DIR = CORPUS_DIR / "cache"          # per-document .spacy annotations
-OUTPUTS_DIR = PROJECT_ROOT / "outputs"
 SPACY_MODEL = "en_core_web_sm"            # NOT trf — Streamlit Cloud RAM ceiling
 SPACY_BATCH_SIZE = 32
 

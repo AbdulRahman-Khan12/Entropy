@@ -9,13 +9,23 @@
 pandas>=2.0,<3.0
 python-dateutil>=2.9
 
-# --- Added in later stages (kept here as a roadmap, currently commented) ---
-# Stage 3  spacy>=3.7,<4.0          # POS tagging + NER
-# Stage 3  nltk>=3.9                # WordNet, tokenisers, comparison baseline
-# Stage 5  dateparser>=1.2          # relative time expression normalisation
-# Stage 6  networkx>=3.2            # temporal graph
-# Stage 6  matplotlib>=3.8          # timeline figures
-# Stage 7  streamlit>=1.40          # web interface
-
+# --- Stages 2-4: parsing, NER, relations, events --------------------------
 spacy>=3.8,<3.9
 en_core_web_sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl
+
+# --- Stage 5: web interface -----------------------------------------------
+streamlit>=1.49
+
+# --- Planned but not needed -----------------------------------------------
+# dateparser   Stage 5 TIMEX normalisation is hand-rolled on datetime + re.
+# networkx     entropy/graph.py uses plain dicts and an adjacency index.
+# matplotlib   Streamlit's built-in charts cover every figure in the app.
+# nltk         not used by the final pipeline.
+
+# --- Optional: Hugging Face comparison baseline ---------------------------
+# DO NOT uncomment for Streamlit Community Cloud - torch is far larger than
+# the ~1 GB deploy budget, and the app never loads the model. Install locally:
+#   pip install "transformers>=4.40"
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+# transformers>=4.40
+# torch
