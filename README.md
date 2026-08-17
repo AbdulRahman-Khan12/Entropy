@@ -1,4 +1,4 @@
-# Entropy
+﻿# Entropy
 
 An information extraction pipeline over a frozen news corpus. Entropy performs
 POS tagging, named entity recognition, relation extraction, event extraction and
@@ -30,9 +30,9 @@ enough to reproduce every result; no downloads, no API keys, no drift.
 ## Setup
 
 Python 3.11 or 3.12 is recommended. spaCy, Stanza and transformers (added from
-Stage 3 onward) have the most reliable Windows wheels on those versions.
+Stage 2 onward) have the most reliable Windows wheels on those versions.
 
-```powershell
+```
 cd "D:\GlobalAcademic\7thsem\Advanced NLP\Projects\Entropy"
 
 py -3.12 -m venv .venv
@@ -46,9 +46,12 @@ Note the quotes around the path — `Advanced NLP` contains a space.
 
 If PowerShell blocks the activation script, run once:
 
-```powershell
+```
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
+
+Every command below assumes the environment is active — the prompt should begin
+with `(.venv)`. Without it you will hit `ModuleNotFoundError: No module named 'spacy'`.
 
 ---
 
@@ -57,22 +60,22 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ### Working corpus (required)
 
 1. Download the Wikinews article dataset (a JSON array of ~21,000 articles,
-   CC BY 2.5): https://www.kaggle.com/datasets/datagator/wikinews-article-dataset
+   CC BY 2.5): <https://www.kaggle.com/datasets/datagator/wikinews-article-dataset>
 2. Save the JSON file as `data/raw/wikinews.json`.
 3. Build the frozen slice:
 
-```powershell
+```
 python -m scripts.build_corpus --dry-run   # preview the selection
 python -m scripts.build_corpus             # write it
 ```
 
-This produces `data/corpus/entropy_corpus.jsonl` and
-`data/corpus/manifest.json`. Both are committed; `data/raw/` is not.
+This produces `data/corpus/entropy_corpus.jsonl` and `data/corpus/manifest.json`.
+Both are committed; `data/raw/` is not.
 
-Tune the selection in `entropy/config.py` — `THEME_CATEGORIES`, `MIN_WORDS`
-and `MAX_DOCS` are the knobs that matter.
+Tune the selection in `entropy/config.py` — `THEME_CATEGORIES`, `MIN_WORDS` and
+`MAX_DOCS` are the knobs that matter.
 
-### Evaluation data (optional, Stage 7)
+### Evaluation data (optional, Stage 5b)
 
 TimeBank + AQUAINT in TimeML format, used to measure extraction accuracy
 against gold annotations. Place under `data/eval/`. Not redistributed here —
@@ -80,21 +83,53 @@ see `NOTICE.md`.
 
 ---
 
+## Running the pipeline
+
+From the repository root, with the environment active:
+
+```
+python scripts/preprocess.py
+python scripts/extract_entities.py
+python scripts/extract_relations.py --hf --hf-limit 50
+python scripts/build_graph.py
+python scripts/evaluate.py
+python scripts/make_report.py --readme-table
+python scripts/export_artifacts.py
+streamlit run app.py
+```
+
+**Do not run `evaluate.py --make-sample`.** It overwrites
+`data/gold/sample_relations.csv` and destroys the existing manual judgements.
+`make_report.py` only reads, so it is always safe to re-run.
+
+---
+
 ## Layout
 
 ```
 Entropy/
-├─ entropy/              importable package — the Streamlit app depends on this
-│  ├─ config.py          all paths and tunable parameters
-│  └─ corpus.py          Document model + loaders
-├─ scripts/              one-off command-line jobs
-│  └─ build_corpus.py    raw dump -> frozen JSONL
+├─ entropy/                 importable package — the Streamlit app depends on this
+│  ├─ config.py             all paths and tunable parameters
+│  ├─ corpus.py             Document model + loaders
+│  └─ relations.py          relation patterns and extraction rules
+├─ scripts/                 one-off command-line jobs
+│  ├─ build_corpus.py       raw dump -> frozen JSONL
+│  ├─ preprocess.py         segmentation and tokenisation
+│  ├─ extract_entities.py   POS tagging and NER
+│  ├─ extract_relations.py  rule-based and transformer relation extraction
+│  ├─ build_graph.py        entity and event graph construction
+│  ├─ evaluate.py           scoring against gold judgements
+│  ├─ make_report.py        report tables and figures (read-only)
+│  └─ export_artifacts.py   final exports
 ├─ data/
-│  ├─ raw/               git-ignored — large source dumps
-│  ├─ corpus/            committed — the frozen working corpus
-│  └─ eval/              git-ignored — gold annotations
-├─ outputs/              git-ignored — generated tables and figures
-└─ notebooks/            exploration
+│  ├─ raw/                  git-ignored — large source dumps
+│  ├─ corpus/               committed — the frozen working corpus
+│  ├─ gold/                 manual judgements used for evaluation
+│  └─ eval/                 git-ignored — gold annotations
+├─ docs/
+│  └─ report.md             written report
+├─ outputs/                 git-ignored — generated tables and figures
+└─ app.py                   Streamlit interface
 ```
 
 The `entropy/` vs `scripts/` split matters for deployment: Streamlit Community
@@ -104,15 +139,16 @@ Cloud only needs to import `entropy/`, so build-time code never ships.
 
 ## Stages
 
-| Stage | Content | Status |
-|-------|---------|--------|
-| 1 | Repository scaffold, frozen corpus, build pipeline | ✅ |
-| 2 | Ingestion and preprocessing (segmentation, tokenisation) | |
-| 3 | POS tagging and named entity recognition | |
-| 4 | Relation extraction | |
-| 5 | Event and time expression extraction, temporal normalisation | |
-| 6 | Temporal ordering and event graph | |
-| 7 | Streamlit interface, evaluation, report | |
+| Stage | Content                                                                   | Status      |
+| ----- | ------------------------------------------------------------------------- | ----------- |
+| 1     | Repository scaffold, frozen corpus, build pipeline                        | ✅           |
+| 2     | Preprocessing, POS tagging, named entity recognition                      | ✅           |
+| 3     | Relation extraction                                                       | ✅           |
+| 4     | Event and time expression extraction, temporal normalisation, event graph | ✅           |
+| 5     | **Delivery**                                                              | In progress |
+| 5a    | Streamlit interface                                                       | ✅           |
+| 5b    | Evaluation                                                                | In progress |
+| 5c    | Report                                                                    | In progress |
 
 ---
 
