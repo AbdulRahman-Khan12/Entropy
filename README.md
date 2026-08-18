@@ -139,16 +139,18 @@ Cloud only needs to import `entropy/`, so build-time code never ships.
 
 ## Stages
 
-| Stage | Content                                                                   | Status      |
-| ----- | ------------------------------------------------------------------------- | ----------- |
-| 1     | Repository scaffold, frozen corpus, build pipeline                        | ✅           |
-| 2     | Preprocessing, POS tagging, named entity recognition                      | ✅           |
-| 3     | Relation extraction                                                       | ✅           |
-| 4     | Event and time expression extraction, temporal normalisation, event graph | ✅           |
-| 5     | **Delivery**                                                              | In progress |
-| 5a    | Streamlit interface                                                       | ✅           |
-| 5b    | Evaluation                                                                | In progress |
-| 5c    | Report                                                                    | In progress |
+## Stages
+
+| Stage | Scope                                                    | Status |
+| ----- | -------------------------------------------------------- | ------ |
+| 1     | Scaffold + frozen Wikinews corpus                        | Done   |
+| 2     | Preprocessing + spaCy annotation cache                   | Done   |
+| 3     | POS tagging, NER, domain gazetteer, alias resolution     | Done   |
+| 4     | Relation extraction + event extraction (rule + HF baseline) | Done |
+| 5     | **Delivery**                                             | Done   |
+| 5a    | Temporal ordering + event graph                          | Done   |
+| 5b    | Streamlit app                                            | Done   |
+| 5c    | Evaluation + report                                      | Done   |
 
 ---
 
